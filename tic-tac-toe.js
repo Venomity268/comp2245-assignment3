@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const squares = document.querySelectorAll('#board div');
     let currentPlayer = 'X';
     const gameState = Array(9).fill(null);
+
     squares.forEach((square, index) => {
         square.classList.add('square');
         square.addEventListener('click', () => {
@@ -11,6 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 square.classList.add(currentPlayer);
                 currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
             }
+        });
+        square.addEventListener('mouseenter', () => {
+            square.classList.add('hover');
+        });
+
+        square.addEventListener('mouseleave', () => {
+            square.classList.remove('hover');
         });
     });
 });
