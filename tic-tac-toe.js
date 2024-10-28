@@ -20,6 +20,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return false;
     };
+    const resetGame = () => {
+        console.log("Reset game triggered");
+        gameState.fill(null);
+        squares.forEach(square => {
+            square.textContent = '';
+            square.classList.remove('X', 'O');
+        });
+        statusDiv.textContent = 'Move your mouse over a square and click to play an X or an O.';
+        statusDiv.classList.remove('you-won');
+        currentPlayer = 'X';
+    };
+    const newGameButton = document.querySelector('.btn');
+    if (newGameButton) {
+        newGameButton.addEventListener('click', resetGame);
+    } else {
+        console.error("New Game button with class 'btn' not found");
+    }
     squares.forEach((square, index) => {
         square.classList.add('square');
         square.addEventListener('click', () => {
