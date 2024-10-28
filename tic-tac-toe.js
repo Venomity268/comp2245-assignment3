@@ -21,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
     };
     const resetGame = () => {
-        console.log("Reset game triggered");
         gameState.fill(null);
         squares.forEach(square => {
             square.textContent = '';
@@ -31,29 +30,46 @@ document.addEventListener('DOMContentLoaded', () => {
         statusDiv.classList.remove('you-won');
         currentPlayer = 'X';
     };
-    const newGameButton = document.querySelector('.btn');
+	const newGameButton = document.querySelector('.btn');
     if (newGameButton) {
         newGameButton.addEventListener('click', resetGame);
-    } else {
-        console.error("New Game button with class 'btn' not found");
     }
-    squares.forEach((square, index) => {
+    for (let i = 0; i < squares.length; i++) {
+        const square = squares[i];
         square.classList.add('square');
         square.addEventListener('click', () => {
-            if (!gameState[index]) {
-                gameState[index] = currentPlayer;
-                square.textContent = currentPlayer;
-                square.classList.add(currentPlayer);
+            if (gameState[i] === null) {
+                if (currentPlayer === 'X') {
+                    gameState[i] = 'X';
+                    square.textContent = 'X';
+                    square.classList.add('X');
+                } else {
+                    gameState[i] = 'O';
+                    square.textContent = 'O';
+                    square.classList.add('O');
+                }
                 if (!checkWinner()) {
-                    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                    if (currentPlayer === 'X') {
+                        currentPlayer = 'O';
+                    } else {
+                        currentPlayer = 'X';
+                    }
+                }
+            } else {
+                if (gameState[i] === 'X' || gameState[i] === 'O') {
+                    return;
                 }
             }
         });
         square.addEventListener('mouseenter', () => {
-            square.classList.add('hover');
+            if (!square.classList.contains('hover')) {
+                square.classList.add('hover');
+            }
         });
         square.addEventListener('mouseleave', () => {
-            square.classList.remove('hover');
+            if (square.classList.contains('hover')) {
+                square.classList.remove('hover');
+            }
         });
-    });
+    }
 });
